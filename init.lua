@@ -108,7 +108,7 @@ vim.opt.relativenumber = true
 vim.opt.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
-vim.opt.showmode = true
+vim.opt.showmode = false
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -277,6 +277,7 @@ require('lazy').setup({
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'tpope/vim-unimpaired', -- paired things
   'tpope/vim-commentary', -- comments
+  'tpope/vim-fugitive', -- Git integration
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
