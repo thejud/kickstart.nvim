@@ -160,6 +160,51 @@ vim.opt.scrolloff = 10
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+-- map jk to escape
+vim.keymap.set('i', 'jk', '<esc>')
+
+-- read and and write block of text between vim sessions
+-- Usage:
+-- `from' session:
+--  ma
+--  move to end-of-block
+--  <leader>xww
+--
+-- `to' session:
+--  move to where I want block inserted
+--   xrr
+-- xv to view the paste buffer
+--
+-- There are three buffers available, the default, xrr and xww
+-- and then then /tmp/a and /tmp/b buffers:
+-- xra xwa => /tmp/a
+-- xrb xwb => /tmp/b
+--
+vim.keymap.set('n', '<leader>xra', ':r /tmp/a<Enter>', { desc = '[r]ead from /tmp/[a]' })
+vim.keymap.set('n', '<leader>xwa', ":'a,.w! /tmp/a<Enter>", { desc = '[w]rite to /tmp/[a]' })
+vim.keymap.set('n', '<leader>xva', ':e /tmp/a<Enter>', { desc = '[v]iew /tmp/a' })
+vim.keymap.set('v', '<leader>xra', ':r /tmp/a<Enter>', { desc = '[r]ead from /tmp/a' })
+vim.keymap.set('v', '<leader>xwa', ':w! /tmp/a<Enter>', { desc = '[w]rite to /tmp/a' })
+
+vim.keymap.set('n', '<leader>xrb', ':r /tmp/b<Enter>', { desc = '[r]ead from /tmp/[b]' })
+vim.keymap.set('n', '<leader>xwb', ":'a,.w! /tmp/b<Enter>", { desc = '[r]ead to /tmp/[b]' })
+vim.keymap.set('n', '<leader>xvb', ':e /tmp/b<Enter>', { desc = '[v]iew /tmp/[b]' })
+vim.keymap.set('v', '<leader>xrb', 'c<esc>:r /tmp/a<Enter>', { desc = '[r]ead from /tmp/[b]' })
+vim.keymap.set('v', '<leader>xwb', ':w! /tmp/b<Enter>', { desc = '[w]rite to /tmp/[b]' })
+
+vim.keymap.set('n', '<leader>x!a', ':r! bash /tmp/a<Enter>', { desc = '[!] execute the /tmp/[a] buffer' })
+
+-- NOTE - neovim is currently set to use the main clipboard. See if we like this.
+--
+vim.keymap.set('n', '<Leader>xpa', ':r !pbpaste<CR>', { desc = '[p]aste to the clipboboard' })
+vim.keymap.set('n', '<Leader>xcp', ':w !pbcopy<CR>', { desc = '[c]opy from the clipboboard' })
+
+-- TODO: more stuff to migrate
+-- " map some common 3-way diff merge options.
+-- noremap <Leader>d1 :diffget LOCAL<CR>
+-- noremap <Leader>d2 :diffget BASE<CR>
+-- noremap <Leader>d3 :diffget REMOTE<CR>
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
