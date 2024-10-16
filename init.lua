@@ -158,6 +158,9 @@ vim.keymap.set('i', 'jk', '<esc>')
 -- quick write file - [a]utosave
 vim.keymap.set('n', '<leader>a', ':write<CR>')
 
+-- edit config file
+vim.keymap.set('n', '<leader>ve', ':edit $MYVIMRC<CR>')
+
 -- read and and write block of text between vim sessions
 -- Usage:
 -- `from' session:
@@ -193,6 +196,12 @@ vim.keymap.set('n', '<leader>x!a', ':r! bash /tmp/a<Enter>', { desc = '[!] execu
 --
 vim.keymap.set('n', '<Leader>xpa', ':r !pbpaste<CR>', { desc = '[p]aste to the clipboboard' })
 vim.keymap.set('n', '<Leader>xcp', ':w !pbcopy<CR>', { desc = '[c]opy from the clipboboard' })
+
+vim.keymap.set('n', '<Leader>g', ':Neogit<CR>', { desc = 'open neo[g]it' })
+vim.keymap.set('n', '<Leader>gn', ':Neogit ', { desc = 'start neo[g]it and wait for [n]ext' })
+vim.keymap.set('n', '<Leader>gc', ':NeogitCommit<CR>', { desc = 'open neo[g]it [c]ommit' })
+vim.keymap.set('n', '<Leader>gd', ':DiffviewOpen<CR>', { desc = '[d]iffview open' })
+vim.keymap.set('n', '<Leader>gx', ':DiffviewClose<CR>', { desc = 'diffview e[x]it' })
 
 -- TODO: more stuff to migrate
 -- " map some common 3-way diff merge options.
@@ -291,7 +300,18 @@ require('lazy').setup({
       -- Only one of these is needed.
       'nvim-telescope/telescope.nvim', -- optional
     },
-    config = true,
+    config = function()
+      require('neogit').setup {
+        kind = 'split', -- opens neogit in a split
+        signs = {
+          -- { CLOSED, OPENED }
+          section = { '', '' },
+          item = { '', '' },
+          hunk = { '', '' },
+        },
+        integrations = { diffview = true }, -- adds integration with diffview.nvim
+      }
+    end,
   },
 
   -- Here is a more advanced example where we pass configuration
