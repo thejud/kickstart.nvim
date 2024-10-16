@@ -163,6 +163,9 @@ vim.opt.scrolloff = 10
 -- map jk to escape
 vim.keymap.set('i', 'jk', '<esc>')
 
+-- quick write file - [a]utosave
+vim.keymap.set('n', '<leader>a', ':write<CR>')
+
 -- read and and write block of text between vim sessions
 -- Usage:
 -- `from' session:
@@ -277,7 +280,7 @@ require('lazy').setup({
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'tpope/vim-unimpaired', -- paired things
   'tpope/vim-commentary', -- comments
-  'tpope/vim-fugitive', -- Git integration
+  -- 'tpope/vim-fugitive', -- Git integration
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -285,6 +288,19 @@ require('lazy').setup({
   --
   -- Use `opts = {}` to force a plugin to be loaded.
   --
+  --
+
+  {
+    'NeogitOrg/neogit',
+    dependencies = {
+      'nvim-lua/plenary.nvim', -- required
+      'sindrets/diffview.nvim', -- optional - Diff integration
+
+      -- Only one of these is needed.
+      'nvim-telescope/telescope.nvim', -- optional
+    },
+    config = true,
+  },
 
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
